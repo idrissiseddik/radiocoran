@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إذاعة القرآن الكريم</title>
+    <!-- Liens Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts (Police Arabe Claire) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
+    <!-- Styles CSS personnalisés -->
+    <style>
+        /* Variables de couleurs */
+        :root {
+            --primary-color: #198754;
+            --secondary-color: #FFD700;
+            --text-color: #343a40;
+            --background-color: #f8f9fa;
+            --hover-color: #157347;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+            background: linear-gradient(135deg, var(--background-color), #e9f3f0);
+            color: var(--text-color);
+            margin-bottom: 120px; /* Espace pour le footer fixe et l'icône */
+            padding-top: 60px; /* Marge entre header et contenu */
+        }
+
+        /* Header Fixé Stylish */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--primary-color), #117c51);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Footer Fixe Stylish */
+        .footer-fixed {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, var(--primary-color), #117c51);
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Icône de Contact Stylish */
+        .contact-icon {
+            position: fixed;
+            bottom: 80px; /* Au-dessus du footer */
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--primary-color), #117c51);
+            color: white;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Titre de l'icône de Contact */
+        .contact-title {
+            position: fixed;
+            bottom: 160px; /* Positionner au-dessus de l'icône */
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--primary-color);
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Modale Générale Stylish */
+        .modal-content {
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border: none;
+            background: linear-gradient(135deg, #ffffff, #f0f8ff);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), #117c51);
+            color: white;
+            border-bottom: none;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            padding: 15px;
+        }
+
+        .modal-body {
+            font-size: 18px;
+            line-height: 1.6;
+            padding: 20px;
+            text-align: justify; /* Alignement justifié du texte */
+        }
+
+        .modal-footer {
+            background: #f0f8ff;
+            border-top: none;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            padding: 15px;
+        }
+
+        /* Boutons de Contact Stylish */
+        .btn-contact {
+            background: linear-gradient(135deg, var(--primary-color), #117c51);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%; /* Pour que chaque bouton prenne toute la largeur */
+            margin-bottom: 10px; /* Espacement entre les boutons */
+        }
+
+        .btn-contact:hover {
+            background: linear-gradient(135deg, var(--hover-color), #0c533b);
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Bouton Fermer Stylish */
+        .btn-close-modal {
+            background: linear-gradient(135deg, red, #b22222);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%; /* Pour que le bouton "Fermer" prenne toute la largeur */
+        }
+
+        .btn-close-modal:hover {
+            background: linear-gradient(135deg, darkred, #8b0000);
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Masquer le lecteur audio personnalisé */
+        .custom-audio-player {
+            display: none;
+        }
+
+        /* Style pour le contrôle de volume */
+        .volume-control {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .volume-control input[type="range"] {
+            width: 100%;
+            max-width: 200px;
+            cursor: pointer;
+        }
+
+        /* Style pour le message "Vous écoutez maintenant" */
+        #now-playing {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Réduction des marges sur petits écrans */
+        @media (max-width: 768px) {
+            #accueil {
+                padding-bottom: 5px;
+            }
+
+            #reciteurs {
+                padding-top: 5px;
+            }
+
+            .contact-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 18px;
+            }
+
+            .contact-title {
+                font-size: 16px;
+                bottom: 140px; /* Ajustement de la position du titre */
+            }
+        }
+
+        /* Masquer le bouton X dans toutes les modales */
+        .modal-header .btn-close {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Fixé avec Titre Centré -->
+    <header class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid d-flex justify-content-center align-items-center">
+            <a class="navbar-brand" href="#">إذاعة القرآن الكريم</a>
+        </div>
+    </header>
+
+    <!-- Titre de l'icône de Contact -->
+    <div class="contact-title">تواصل معنا</div>
+
+    <!-- Icône de Contact -->
+    <div class="contact-icon" data-bs-toggle="modal" data-bs-target="#contactModal">
+        <i class="fas fa-envelope"></i>
+    </div>
+
+    <!-- Modale de Tadhkir (Ouverture Automatique) -->
+    <div class="modal fade" id="reminderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">تذكير</h5>
+                </div>
+                <div class="modal-body">
+                    <!-- Texte principal justifié -->
+                    <p>
+                        هل صليت اليوم على سيد الخلق سيدنا محمد صلى الله عليه و سلم؟
+                    </p>
+                    <p>
+                        اللهم صل على سيدنا محمد و على آل سيدنا محمد كما صليت على سيدنا إبراهيم وعلى آل سيدنا إبراهيم 
+                        و بارك على سيدنا محمد و على آل سيدنا محمد كما باركت على سيدنا إبراهيم وعلى آل سيدنا إبراهيم في العالمين إنك حميد مجيد.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">نعم</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale de Contact -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">اتصل بنا</h5>
+                </div>
+                <div class="modal-body">
+                    <p>اختر طريقة التواصل:</p>
+                </div>
+                <div class="modal-footer">
+                    <!-- Mettre chaque bouton sur une ligne distincte -->
+                    <div class="row">
+                        <!-- Bouton WhatsApp -->
+                        <div class="col-12">
+                            <button type="button" class="btn-contact" onclick="openWhatsApp()">
+                                <i class="fab fa-whatsapp"></i> واتساب
+                            </button>
+                        </div>
+                        <!-- Bouton SMS -->
+                        <div class="col-12">
+                            <button type="button" class="btn-contact" onclick="openSMS()">
+                                <i class="fas fa-sms"></i> رسالة نصية
+                            </button>
+                        </div>
+                        <!-- Bouton Appel Téléphonique -->
+                        <div class="col-12">
+                            <button type="button" class="btn-contact" onclick="makePhoneCall()">
+                                <i class="fas fa-phone"></i> اتصال هاتفي
+                            </button>
+                        </div>
+                        <!-- Bouton Fermer -->
+                        <div class="col-12">
+                            <button type="button" class="btn-close-modal" data-bs-dismiss="modal">
+                                <i class="fas fa-times"></i> إغلاق
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Accueil Stylish -->
+    <section id="accueil" class="text-center py-5">
+        <div class="container">
+            <h1>مرحبًا بكم في موقع إذاعة القرآن الكريم</h1>
+            <p>استمع إلى تلاوات مميزة من أفضل قراء القرآن الكريم.</p>
+        </div>
+    </section>
+
+    <!-- Section Liste Déroulante des Réciteurs -->
+    <section id="reciteurs" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">اختر القارئ المفضل لديك</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-sm-12">
+                    <select id="reciteurs-list" class="form-select" aria-label="Default select example">
+                        <option value="">اختر قارئًا...</option>
+                        <option value="https://backup.qurango.net/radio/omar_alqazabri">الشيخ عمرالقزابري</option>
+                        <option value="https://backup.qurango.net/radio/abdulrahman_sudais">الشيخ عبد الرحمن السديس</option>
+                        <option value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3">اسم القارئ 3</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Message "Vous écoutez maintenant" -->
+            <div id="now-playing" class="text-center mt-3">
+                ستظهر هنا التلاوة المختارة
+            </div>
+
+            <!-- Contrôle de volume -->
+            <div class="volume-control mt-3">
+                <label for="volume">
+                    <i class="fas fa-volume-up"></i> الصوت:
+                </label>
+                <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Fixe Stylish -->
+    <footer class="footer-fixed">
+        إنشاء و تصميم أخوكم م.الصديق الإدريسي ـ لا تنسونا من صالح دعائكم و لكم بالمثل
+    </footer>
+
+    <!-- Scripts Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script JavaScript personnalisé -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const audio = new Audio();
+            const reciteursList = document.getElementById('reciteurs-list');
+            const volumeControl = document.getElementById('volume');
+            const nowPlaying = document.getElementById('now-playing'); // Élément pour afficher le message
+
+            // Gestion du changement de sélection dans la liste déroulante
+            reciteursList.addEventListener('change', function () {
+                const selectedValue = this.value;
+                const selectedText = this.options[this.selectedIndex].text; // Nom du récitateur
+
+                if (selectedValue) {
+                    audio.src = selectedValue;
+                    audio.play();
+                    nowPlaying.textContent = `أنت تستمع الآن إلى: ${selectedText}`; // Afficher le message
+                } else {
+                    audio.src = '';
+                    audio.pause();
+                    nowPlaying.textContent = 'ستظهر هنا التلاوة المختارة'; // Message par défaut
+                }
+            });
+
+            // Gestion du contrôle de volume
+            volumeControl.addEventListener('input', function () {
+                audio.volume = this.value;
+            });
+
+            // Afficher la modale de tadhkir au chargement de la page
+            const reminderModal = new bootstrap.Modal(document.getElementById('reminderModal'));
+            reminderModal.show();
+
+            // Fonction pour ouvrir WhatsApp
+            function openWhatsApp() {
+                const phoneNumber = '212608975435'; // Numéro de téléphone avec indicatif pays
+                const whatsappMessage = `مرحبا، أنا أرغب في التواصل عبر واتساب.`;
+                const encodedMessage = encodeURIComponent(whatsappMessage); // Encoder le message
+                const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                try {
+                    window.open(whatsappLink, '_blank');
+                } catch (e) {
+                    alert('حدث خطأ أثناء فتح WhatsApp. يرجى التحقق من إعدادات جهازك.');
+                }
+            }
+
+            // Fonction pour ouvrir SMS
+            function openSMS() {
+                const phoneNumber = '212608975435'; // Numéro de téléphone avec indicatif pays
+                const smsLink = `sms:${phoneNumber}`;
+                try {
+                    window.open(smsLink, '_blank');
+                } catch (e) {
+                    alert('حدث خطأ أثناء فتح الرسائل النصية. يرجى التحقق من إعدادات جهازك.');
+                }
+            }
+
+            // Fonction pour passer un appel téléphonique
+            function makePhoneCall() {
+                const phoneNumber = '212608975435'; // Numéro de téléphone avec indicatif pays
+                const callLink = `tel:${phoneNumber}`;
+                try {
+                    window.open(callLink, '_blank');
+                } catch (e) {
+                    alert('حدث خطأ أثناء محاولة الاتصال. يرجى التحقق من إعدادات جهازك.');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
