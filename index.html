@@ -150,6 +150,9 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 100%; /* Pour que chaque bouton prenne toute la largeur */
             margin-bottom: 10px; /* Espacement entre les boutons */
+            text-decoration: none; /* Supprimer le soulignement des liens */
+            display: block; /* Pour que les liens prennent toute la largeur */
+            text-align: center; /* Centrer le texte */
         }
 
         .btn-contact:hover {
@@ -284,25 +287,24 @@
                     <p>اختر طريقة التواصل:</p>
                 </div>
                 <div class="modal-footer">
-                    <!-- Mettre chaque bouton sur une ligne distincte -->
                     <div class="row">
-                        <!-- Bouton WhatsApp -->
+                        <!-- Lien WhatsApp -->
                         <div class="col-12">
-                            <button type="button" class="btn-contact" onclick="openWhatsApp()">
+                            <a href="https://wa.me/212608975435?text=مرحبا، أنا أرغب في التواصل عبر واتساب." class="btn-contact" target="_blank">
                                 <i class="fab fa-whatsapp"></i> واتساب
-                            </button>
+                            </a>
                         </div>
-                        <!-- Bouton SMS -->
+                        <!-- Lien SMS -->
                         <div class="col-12">
-                            <button type="button" class="btn-contact" onclick="openSMS()">
+                            <a href="sms:212608975435" class="btn-contact" target="_blank">
                                 <i class="fas fa-sms"></i> رسالة نصية
-                            </button>
+                            </a>
                         </div>
-                        <!-- Bouton Appel Téléphonique -->
+                        <!-- Lien Appel Téléphonique -->
                         <div class="col-12">
-                            <button type="button" class="btn-contact" onclick="makePhoneCall()">
+                            <a href="tel:212608975435" class="btn-contact" target="_blank">
                                 <i class="fas fa-phone"></i> اتصال هاتفي
-                            </button>
+                            </a>
                         </div>
                         <!-- Bouton Fermer -->
                         <div class="col-12">
@@ -393,41 +395,6 @@
             // Afficher la modale de tadhkir au chargement de la page
             const reminderModal = new bootstrap.Modal(document.getElementById('reminderModal'));
             reminderModal.show();
-
-            // Fonction pour ouvrir WhatsApp
-            function openWhatsApp() {
-                const phoneNumber = '212608975435'; // Numéro de téléphone avec indicatif pays
-                const whatsappMessage = `مرحبا، أنا أرغب في التواصل عبر واتساب.`;
-                const encodedMessage = encodeURIComponent(whatsappMessage); // Encoder le message
-                const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-                try {
-                    window.open(whatsappLink, '_blank');
-                } catch (e) {
-                    alert('حدث خطأ أثناء فتح WhatsApp. يرجى التحقق من إعدادات جهازك.');
-                }
-            }
-
-            // Fonction pour ouvrir SMS
-            function openSMS() {
-                const phoneNumber = '212608975435'; // Numéro de téléphone avec indicatif pays
-                const smsLink = `sms:${phoneNumber}`;
-                try {
-                    window.open(smsLink, '_blank');
-                } catch (e) {
-                    alert('حدث خطأ أثناء فتح الرسائل النصية. يرجى التحقق من إعدادات جهازك.');
-                }
-            }
-
-            // Fonction pour passer un appel téléphonique
-            function makePhoneCall() {
-                const phoneNumber = '212608975435'; // Numéro de téléphone avec indicatif pays
-                const callLink = `tel:${phoneNumber}`;
-                try {
-                    window.open(callLink, '_blank');
-                } catch (e) {
-                    alert('حدث خطأ أثناء محاولة الاتصال. يرجى التحقق من إعدادات جهازك.');
-                }
-            }
         });
     </script>
 </body>
